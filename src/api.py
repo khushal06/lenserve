@@ -2,11 +2,19 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from src.classifier import classify
 from src.router import route_complaint
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="LenServe — AI After-Sales Classifier",
     description="Classifies and routes Lenovo customer complaints using local LLM",
     version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3001"],
+    allow_methods=["*"],
+    allow_headers=["*"]
 )
 
 class ComplaintRequest(BaseModel):
